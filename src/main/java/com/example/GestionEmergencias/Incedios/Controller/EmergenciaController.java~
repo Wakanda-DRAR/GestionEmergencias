@@ -6,13 +6,12 @@ import com.example.GestionEmergencias.Incedios.Service.BomberoService;
 import com.example.GestionEmergencias.Incedios.Service.IncendioResolucionService;
 import com.example.GestionEmergencias.Incedios.Service.IncendioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
-@RestController
-@RequestMapping("/emergencias")
+@Controller
 public class EmergenciaController {
 
     @Autowired
@@ -24,26 +23,24 @@ public class EmergenciaController {
     @Autowired
     private IncendioResolucionService resolucionService;
 
+    private Flux<Incendio> incendios;
+    private Flux<Bombero> bomberos;
 
-    @GetMapping("/iniciar")
-    public Flux<String> iniciarEmergencias() {
-        Flux<Incendio> incendios = incendioService.generarIncendios();
-        Flux<Bombero> bomberos = bomberoService.asignarBomberos(incendios);
 
-        Flux<Void> resoluciones = Flux.zip(incendios, bomberos) // Combinar incendios y bomberos
-                .doOnNext(tuple -> {
-                    Incendio incendio = tuple.getT1();
-                    Bombero bombero = tuple.getT2();
-                    resolucionService.resolverIncendioYBombero(incendio, bombero).subscribe();
-                })
-                .thenMany(Flux.empty());
+    @Bean
+    public ApplicationRunner iniciarFlujos() {
+        return args -> {
+            Flux<Incendio> incendios = incendioService.generarIncendios().share();
+            Flux<Bombero> bomberos = bomberoService.asignarBomberos(incendios).share();
 
-        // Respuesta combinada con el progreso de cada paso
-        return Flux.merge(
-                incendios.map(incendio -> "Incendio generado en: " + incendio.getCiudad()),
-                bomberos.map(bombero -> "Bombero asignado: " + bombero.getNombreBombero()),
-                resoluciones.thenMany(Flux.just("Todos los incendios han sido resueltos y los bomberos completaron su misión."))
-        );
+            Flux.zip(incendios, bomberos)
+                    .doOnNext(tuple -> {
+                        Incendio incendio = tuple.getT1();
+                        Bombero bombero = tuple.getT2();
+                        resolucionService.resolverIncendioYBombero(incendio, bombero).subscribe();
+                    })
+                    .subscribe();
+        };
     }
 
 
