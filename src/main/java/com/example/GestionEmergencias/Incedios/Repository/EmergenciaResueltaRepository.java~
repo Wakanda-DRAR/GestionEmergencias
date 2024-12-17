@@ -1,0 +1,4 @@
+package com.example.GestionEmergencias.Incedios.Repository;
+
+public interface EmergenciaResueltaRepository {
+}

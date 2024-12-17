@@ -12,6 +12,7 @@ public class MisionCumplida {
     private Long id;
     private Long bomberoId;
     private String fechaFinalizacion;
+    private String nombreBombero;
 
     // Getters y Setters
 
@@ -37,6 +38,14 @@ public class MisionCumplida {
 
     public void setFechaFinalizacion(String fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
+    }
+
+    public String getNombreBombero() {
+        return nombreBombero;
+    }
+
+    public void setNombreBombero(String nombreBombero) {
+        this.nombreBombero = nombreBombero;
     }
 
 }

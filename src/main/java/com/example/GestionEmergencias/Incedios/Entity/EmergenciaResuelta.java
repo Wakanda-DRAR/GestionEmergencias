@@ -12,6 +12,7 @@ public class EmergenciaResuelta {
     private Long id;
     private Long incendioId;
     private String fechaResolucion;
+    private String ciudad;
 
     // Getters y Setters
 
@@ -38,4 +39,14 @@ public class EmergenciaResuelta {
     public void setFechaResolucion(String fechaResolucion) {
         this.fechaResolucion = fechaResolucion;
     }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+
 }
