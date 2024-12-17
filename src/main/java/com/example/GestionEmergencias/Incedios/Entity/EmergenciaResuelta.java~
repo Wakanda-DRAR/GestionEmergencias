@@ -1,0 +1,17 @@
+package com.example.GestionEmergencias.Incedios.Entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class EmergenciaResuelta {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long incendioId;
+    private String fechaResolucion;
+
+    // Getters y Setters
+}

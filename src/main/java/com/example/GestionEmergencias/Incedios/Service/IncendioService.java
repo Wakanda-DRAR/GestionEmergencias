@@ -1,0 +1,39 @@
+package com.example.GestionEmergencias.Incedios.Service;
+
+import com.example.GestionEmergencias.Incedios.Entity.Incendio;
+import com.example.GestionEmergencias.Incedios.Repository.IncendioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Random;
+
+@Service
+public class IncendioService {
+
+    @Autowired
+    private IncendioRepository incendioRepository;
+
+    private final List<String> ciudades = List.of("Madrid", "Barcelona", "Valencia");
+    private final List<String> paises = List.of("España", "Francia", "Italia");
+    private final Random random = new Random();
+
+    public Flux<Incendio> generarIncendios() {
+        return Flux.interval(Duration.ofSeconds(5)) // Genera un incendio cada 5 segundos
+                .flatMap(i -> Mono.fromCallable(() -> {
+                    Incendio incendio = new Incendio();
+                    incendio.setCiudad(ciudades.get(random.nextInt(ciudades.size())));
+                    incendio.setPais(paises.get(random.nextInt(paises.size())));
+                    incendio.setFecha(LocalDate.now().toString());
+                    incendio.setHora(LocalTime.now().toString());
+                    incendio.setCalle("Calle " + (random.nextInt(100) + 1));
+                    return incendioRepository.save(incendio);
+                }));
+    }
+}
+

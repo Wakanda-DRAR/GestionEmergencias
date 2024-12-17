@@ -1,0 +1,37 @@
+package com.example.GestionEmergencias.Incedios.Service;
+
+import com.example.GestionEmergencias.Incedios.Entity.Bombero;
+import com.example.GestionEmergencias.Incedios.Entity.Incendio;
+import com.example.GestionEmergencias.Incedios.Repository.BomberoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+
+import java.time.Duration;
+import java.util.Random;
+import java.util.UUID;
+
+@Service
+public class BomberoService {
+
+    @Autowired
+    private BomberoRepository bomberoRepository;
+
+    public Flux<Bombero> enviarBomberos(Flux<Incendio> incendios) {
+        return incendios.delayElements(Duration.ofSeconds(10)) // Envía bomberos 10 segundos después
+                .map(incendio -> crearBombero(incendio))
+                .flatMap(bomberoRepository::save)
+                .doOnNext(bombero -> System.out.println("Bombero enviado: " + bombero));
+    }
+
+    private Bombero crearBombero(Incendio incendio) {
+        Bombero bombero = new Bombero();
+        bombero.setNombreDepartamento("Departamento de Bomberos " + incendio.getCiudad());
+        bombero.setNombreBombero("Bombero #" + new Random().nextInt(100));
+        bombero.setCodigoIdentificacion(UUID.randomUUID().toString());
+        bombero.setEdad(25 + new Random().nextInt(20));
+        bombero.setAniosServicio(1 + new Random().nextInt(30));
+        return bombero;
+    }
+}
+}
