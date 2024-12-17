@@ -13,9 +13,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
 @Service
@@ -51,25 +51,29 @@ public class IncendioResolucionService {
         };
     }
 
-    public void resolverIncendioYBombero(Incendio incendio, Bombero bombero) {
-        // Guardar en EmergenciaResuelta
-        EmergenciaResuelta resuelta = new EmergenciaResuelta();
-        resuelta.setIncendioId(incendio.getId());
-        resuelta.setCiudad(incendio.getCiudad());
-        resuelta.setFechaResolucion(java.time.LocalDate.now().toString());
-        emergenciaResueltaRepository.save(resuelta);
+    public Mono<Void> resolverIncendioYBombero(Incendio incendio, Bombero bombero) {
+        return Mono.delay(Duration.ofSeconds(25))
+                .doOnNext(ignore -> {
+                    // Guardar en EmergenciaResuelta
+                    EmergenciaResuelta resuelta = new EmergenciaResuelta();
+                    resuelta.setIncendioId(incendio.getId());
+                    resuelta.setCiudad(incendio.getCiudad());
+                    resuelta.setFechaResolucion(LocalDate.now().toString());
+                    emergenciaResueltaRepository.save(resuelta);
 
-        // Guardar en MisionCumplida
-        MisionCumplida mision = new MisionCumplida();
-        mision.setBomberoId(bombero.getId());
-        mision.setNombreBombero(bombero.getNombreBombero());
-        mision.setFechaFinalizacion(java.time.LocalDate.now().toString());
-        misionCumplidaRepository.save(mision);
+                    // Guardar en MisionCumplida
+                    MisionCumplida mision = new MisionCumplida();
+                    mision.setBomberoId(bombero.getId());
+                    mision.setNombreBombero(bombero.getNombreBombero());
+                    mision.setFechaFinalizacion(LocalDate.now().toString());
+                    misionCumplidaRepository.save(mision);
 
-        // Eliminar los registros originales
-        incendioRepository.deleteById(incendio.getId());
-        bomberoRepository.deleteById(bombero.getId());
+                    // Eliminar los registros originales
+                    incendioRepository.deleteById(incendio.getId());
+                    bomberoRepository.deleteById(bombero.getId());
 
-        System.out.println("Incendio resuelto y bombero enviado a Misión Cumplida.");
+                    System.out.println("Incendio resuelto tras 25 segundos y bombero enviado a Misión Cumplida.");
+                })
+                .then();
     }
 }

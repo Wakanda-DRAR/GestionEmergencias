@@ -19,7 +19,7 @@ public class BomberoService {
     private BomberoRepository bomberoRepository;
 
     public Flux<Bombero> asignarBomberos(Flux<Incendio> incendios) {
-        return incendios.delayElements(Duration.ofSeconds(10)) // 10 segundos después de generarse el incendio
+        return incendios.delayElements(Duration.ofSeconds(15)) // 10 segundos después de generarse el incendio
                 .flatMap(incendio -> Mono.fromCallable(() -> {
                     Bombero bombero = crearBombero(incendio);
                     return bomberoRepository.save(bombero);
@@ -36,5 +36,7 @@ public class BomberoService {
         bombero.setAniosServicio(1 + random.nextInt(30));
         return bombero;
     }
+
+
 }
 

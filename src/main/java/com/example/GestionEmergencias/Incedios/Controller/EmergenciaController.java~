@@ -24,19 +24,27 @@ public class EmergenciaController {
     @Autowired
     private IncendioResolucionService resolucionService;
 
+
     @GetMapping("/iniciar")
     public Flux<String> iniciarEmergencias() {
         Flux<Incendio> incendios = incendioService.generarIncendios();
         Flux<Bombero> bomberos = bomberoService.asignarBomberos(incendios);
 
-        Flux<Void> resoluciones = resolucionService.resolverIncendioYBombero(incendios, bomberos);
+        Flux<Void> resoluciones = Flux.zip(incendios, bomberos) // Combinar incendios y bomberos
+                .doOnNext(tuple -> {
+                    Incendio incendio = tuple.getT1();
+                    Bombero bombero = tuple.getT2();
+                    resolucionService.resolverIncendioYBombero(incendio, bombero).subscribe();
+                })
+                .thenMany(Flux.empty());
 
-
+        // Respuesta combinada con el progreso de cada paso
         return Flux.merge(
                 incendios.map(incendio -> "Incendio generado en: " + incendio.getCiudad()),
                 bomberos.map(bombero -> "Bombero asignado: " + bombero.getNombreBombero()),
-                resoluciones.thenMany(Flux.just("Todos los incendios resueltos"))
+                resoluciones.thenMany(Flux.just("Todos los incendios han sido resueltos y los bomberos completaron su misión."))
         );
     }
-}
 
+
+}

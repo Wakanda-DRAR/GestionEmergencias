@@ -1,0 +1,50 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const mapa = document.getElementById("mapa");
+    const eventos = document.getElementById("eventos");
+
+    // Función para actualizar datos del backend
+    function actualizarDatos() {
+        fetch("http://localhost:8080/emergencias/datos")
+            .then(response => response.json())
+            .then(data => {
+                // Limpia el mapa y panel
+                mapa.innerHTML = "";
+                eventos.innerHTML = "";
+
+                // Itera sobre los datos del backend
+                data.forEach(mensaje => {
+                    agregarEvento(mensaje);
+
+                    if (mensaje.includes("🔥")) {
+                        crearIcono("incendio");
+                    } else if (mensaje.includes("🚒")) {
+                        crearIcono("bombero");
+                    } else if (mensaje.includes("✅")) {
+                        crearIcono("check");
+                    }
+                });
+            });
+    }
+
+    // Crear iconos en el mapa
+    function crearIcono(clase) {
+        const icono = document.createElement("div");
+        icono.classList.add("icono", clase);
+        icono.style.left = Math.random() * 90 + "%";
+        icono.style.top = Math.random() * 90 + "%";
+        mapa.appendChild(icono);
+    }
+
+    // Agregar mensajes al panel lateral
+    function agregarEvento(mensaje) {
+        const li = document.createElement("li");
+        li.textContent = mensaje;
+        eventos.appendChild(li);
+    }
+
+    // Actualizar datos cada 5 segundos
+    setInterval(actualizarDatos, 5000);
+
+    // Llamada inicial
+    actualizarDatos();
+});
