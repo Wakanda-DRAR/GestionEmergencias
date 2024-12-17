@@ -15,7 +15,7 @@ public class EmergenciaResuelta {
     private String pais;
     private String calle;
     private String fechaResolucion;
-    private String bomberoId;
+    private Long bomberoId;
     private String nombreBombero;
     private String nombreDepartamento;
 
@@ -69,11 +69,11 @@ public class EmergenciaResuelta {
         this.calle = calle;
     }
 
-    public String getBomberoId() {
+    public Long getBomberoId() {
         return bomberoId;
     }
 
-    public void setBomberoId(String bomberoId) {
+    public void setBomberoId(Long bomberoId) {
         this.bomberoId = bomberoId;
     }
 

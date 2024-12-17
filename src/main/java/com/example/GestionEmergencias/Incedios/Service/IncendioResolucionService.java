@@ -15,6 +15,8 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class IncendioResolucionService {
@@ -54,8 +56,8 @@ public class IncendioResolucionService {
                     resuelta.setCiudad(incendio.getCiudad());
                     resuelta.setPais(incendio.getPais());
                     resuelta.setCalle(incendio.getCalle());
-                    resuelta.setFechaResolucion(LocalDate.now().toString());
-                    resuelta.setBomberoId(bombero.getId());
+                    resuelta.setFechaResolucion(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                    resuelta.setBomberoId(bombero.getCodigoIdentificacion());
                     resuelta.setNombreBombero(bombero.getNombreBombero());
                     resuelta.setNombreDepartamento(bombero.getNombreDepartamento());
                     emergenciaResueltaRepository.save(resuelta);

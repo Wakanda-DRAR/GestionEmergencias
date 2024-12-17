@@ -19,8 +19,8 @@ public class IncendioService {
     @Autowired
     private IncendioRepository incendioRepository;
 
-    private final List<String> ciudades = List.of("Madrid", "Barcelona", "Valencia");
-    private final List<String> paises = List.of("España", "Francia", "Italia");
+    private final List<String> ciudades = List.of("Birnin Zana", "Cibuza", "N'Jadaka", "N'Yami", "N'Gabo", "N'Jadaka", "N'Jadaka", "N'Jadaka", "N'Jadaka");
+    private final List<String> calles = List.of("Calle de la Pantera", "Calle del Vibranium", "Calle de los Ancestros", "Calle de la Tribu Dorada", "Calle de la Tribu Fronteriza", "Calle de la Tribu del Río", "Calle de la Tribu Minera", "Calle de la Tribu Jabari", "Calle de la Tribu Mercante", "Calle del Gran Muro", "Calle del Palacio Real", "Calle del Mercado Central", "Calle de la Sabiduría", "Calle de la Unidad", "Calle de la Libertad");
     private final Random random = new Random();
 
     public Flux<Incendio> generarIncendios() {
@@ -28,10 +28,10 @@ public class IncendioService {
                 .flatMap(i -> Mono.fromCallable(() -> {
                     Incendio incendio = new Incendio();
                     incendio.setCiudad(ciudades.get(random.nextInt(ciudades.size())));
-                    incendio.setPais(paises.get(random.nextInt(paises.size())));
+                    incendio.setPais("Wakanda");
                     incendio.setFecha(LocalDate.now().toString());
                     incendio.setHora(LocalTime.now().toString());
-                    incendio.setCalle("Calle " + (random.nextInt(100) + 1));
+                    incendio.setCalle(calles.get(random.nextInt(calles.size())));
                     return incendioRepository.save(incendio);
                 }));
     }

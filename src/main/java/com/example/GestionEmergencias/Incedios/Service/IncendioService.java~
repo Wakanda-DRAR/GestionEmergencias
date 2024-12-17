@@ -24,7 +24,7 @@ public class IncendioService {
     private final Random random = new Random();
 
     public Flux<Incendio> generarIncendios() {
-        return Flux.interval(Duration.ofSeconds(25)) // Genera un incendio cada 5 segundos
+        return Flux.interval(Duration.ofSeconds(25)) // Genera un incendio cada 25 segundos
                 .flatMap(i -> Mono.fromCallable(() -> {
                     Incendio incendio = new Incendio();
                     incendio.setCiudad(ciudades.get(random.nextInt(ciudades.size())));
