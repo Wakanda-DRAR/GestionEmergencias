@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="menu">
-  <button onclick="showReports()">Mostrar Reportes </button>
+  <button onclick="showReports()">Mostrar Reportes</button>
 </div>
 <div id="reports" class="hidden">
   <h2>Incendios</h2>
