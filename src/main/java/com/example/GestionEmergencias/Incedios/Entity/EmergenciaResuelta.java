@@ -11,8 +11,13 @@ public class EmergenciaResuelta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long incendioId;
-    private String fechaResolucion;
     private String ciudad;
+    private String pais;
+    private String calle;
+    private String fechaResolucion;
+    private Long bomberoId;
+    private String nombreBombero;
+    private String nombreDepartamento;
 
     // Getters y Setters
 
@@ -48,5 +53,44 @@ public class EmergenciaResuelta {
         this.ciudad = ciudad;
     }
 
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public Long getBomberoId() {
+        return bomberoId;
+    }
+
+    public void setBomberoId(Long bomberoId) {
+        this.bomberoId = bomberoId;
+    }
+
+    public String getNombreBombero() {
+        return nombreBombero;
+    }
+
+    public void setNombreBombero(String nombreBombero) {
+        this.nombreBombero = nombreBombero;
+    }
+
+    public String getNombreDepartamento() {
+        return nombreDepartamento;
+    }
+
+    public void setNombreDepartamento(String nombreDepartamento) {
+        this.nombreDepartamento = nombreDepartamento;
+    }
 
 }

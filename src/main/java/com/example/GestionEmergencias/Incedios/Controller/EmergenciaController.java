@@ -12,13 +12,13 @@ import com.example.GestionEmergencias.Incedios.Service.IncendioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -41,6 +41,7 @@ public class EmergenciaController {
 
     @Autowired
     private EmergenciaResueltaRepository emergenciaResueltaRepository;
+
 
 
     @Bean
@@ -68,6 +69,7 @@ public class EmergenciaController {
     public List<Bombero> getBomberos() {
         return bomberoRepository.findAll();
     }
+
 
     @GetMapping("/resolved")
     public List<EmergenciaResuelta> getResolvedEmergencias() {

@@ -1,7 +1,13 @@
 package com.example.GestionEmergencias.Incedios.Controller;
 
 import com.example.GestionEmergencias.Incedios.Entity.Bombero;
+import com.example.GestionEmergencias.Incedios.Entity.EmergenciaResuelta;
 import com.example.GestionEmergencias.Incedios.Entity.Incendio;
+import com.example.GestionEmergencias.Incedios.Entity.MisionCumplida;
+import com.example.GestionEmergencias.Incedios.Repository.BomberoRepository;
+import com.example.GestionEmergencias.Incedios.Repository.EmergenciaResueltaRepository;
+import com.example.GestionEmergencias.Incedios.Repository.IncendioRepository;
+import com.example.GestionEmergencias.Incedios.Repository.MisionCumplidaRepository;
 import com.example.GestionEmergencias.Incedios.Service.BomberoService;
 import com.example.GestionEmergencias.Incedios.Service.IncendioResolucionService;
 import com.example.GestionEmergencias.Incedios.Service.IncendioService;
@@ -9,9 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
-@Controller
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api")
 public class EmergenciaController {
 
     @Autowired
@@ -23,8 +36,17 @@ public class EmergenciaController {
     @Autowired
     private IncendioResolucionService resolucionService;
 
-    private Flux<Incendio> incendios;
-    private Flux<Bombero> bomberos;
+    @Autowired
+    private IncendioRepository incendioRepository;
+
+    @Autowired
+    private BomberoRepository bomberoRepository;
+
+    @Autowired
+    private EmergenciaResueltaRepository emergenciaResueltaRepository;
+
+    @Autowired
+    private MisionCumplidaRepository misionCumplidaRepository;
 
 
     @Bean
@@ -41,6 +63,40 @@ public class EmergenciaController {
                     })
                     .subscribe();
         };
+    }
+
+    @GetMapping("/incendios")
+    public List<Incendio> getIncendios() {
+        return incendioRepository.findAll();
+    }
+
+    @GetMapping("/bomberos")
+    public List<Bombero> getBomberos() {
+        return bomberoRepository.findAll();
+    }
+
+
+    @GetMapping("/resolved")
+    public List<ResolvedEmergencyDTO> getResolvedEmergencias() {
+        List<EmergenciaResuelta> emergenciasResueltas = emergenciaResueltaRepository.findAll();
+        List<MisionCumplida> misionesCumplidas = misionCumplidaRepository.findAll();
+
+        return emergenciasResueltas.stream().map(er -> {
+            MisionCumplida mc = misionesCumplidas.stream()
+                    .filter(m -> m.getBomberoId().equals(er.getIncendioId()))
+                    .findFirst()
+                    .orElse(null);
+
+            return new ResolvedEmergencyDTO(
+                    er.getIncendioId(),
+                    er.getCiudad(),
+                    er.getPais(),
+                    er.getCalle(),
+                    mc != null ? mc.getBomberoId() : null,
+                    mc != null ? mc.getNombreBombero() : null,
+                    mc != null ? mc.getNombreDepartamento() : null
+            );
+        }).collect(Collectors.toList());
     }
 
 

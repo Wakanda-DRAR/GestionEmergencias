@@ -3,11 +3,9 @@ package com.example.GestionEmergencias.Incedios.Service;
 import com.example.GestionEmergencias.Incedios.Entity.Bombero;
 import com.example.GestionEmergencias.Incedios.Entity.EmergenciaResuelta;
 import com.example.GestionEmergencias.Incedios.Entity.Incendio;
-import com.example.GestionEmergencias.Incedios.Entity.MisionCumplida;
 import com.example.GestionEmergencias.Incedios.Repository.BomberoRepository;
 import com.example.GestionEmergencias.Incedios.Repository.EmergenciaResueltaRepository;
 import com.example.GestionEmergencias.Incedios.Repository.IncendioRepository;
-import com.example.GestionEmergencias.Incedios.Repository.MisionCumplidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -30,8 +28,6 @@ public class IncendioResolucionService {
     @Autowired
     private EmergenciaResueltaRepository emergenciaResueltaRepository;
 
-    @Autowired
-    private MisionCumplidaRepository misionCumplidaRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -44,7 +40,6 @@ public class IncendioResolucionService {
             jdbcTemplate.execute("TRUNCATE TABLE incendio");
             jdbcTemplate.execute("TRUNCATE TABLE bombero");
             jdbcTemplate.execute("TRUNCATE TABLE emergencia_resuelta");
-            jdbcTemplate.execute("TRUNCATE TABLE mision_cumplida");
             jdbcTemplate.execute("SET FOREIGN_KEY_CHECKS = 1");
 
             System.out.println("Bases de datos limpiadas al iniciar la aplicación.");
@@ -54,21 +49,17 @@ public class IncendioResolucionService {
     public Mono<Void> resolverIncendioYBombero(Incendio incendio, Bombero bombero) {
         return Mono.delay(Duration.ofSeconds(25))
                 .doOnNext(ignore -> {
-                    // Guardar en EmergenciaResuelta
                     EmergenciaResuelta resuelta = new EmergenciaResuelta();
                     resuelta.setIncendioId(incendio.getId());
                     resuelta.setCiudad(incendio.getCiudad());
+                    resuelta.setPais(incendio.getPais());
+                    resuelta.setCalle(incendio.getCalle());
                     resuelta.setFechaResolucion(LocalDate.now().toString());
+                    resuelta.setBomberoId(bombero.getId());
+                    resuelta.setNombreBombero(bombero.getNombreBombero());
+                    resuelta.setNombreDepartamento(bombero.getNombreDepartamento());
                     emergenciaResueltaRepository.save(resuelta);
 
-                    // Guardar en MisionCumplida
-                    MisionCumplida mision = new MisionCumplida();
-                    mision.setBomberoId(bombero.getId());
-                    mision.setNombreBombero(bombero.getNombreBombero());
-                    mision.setFechaFinalizacion(LocalDate.now().toString());
-                    misionCumplidaRepository.save(mision);
-
-                    // Eliminar los registros originales
                     incendioRepository.deleteById(incendio.getId());
                     bomberoRepository.deleteById(bombero.getId());
 

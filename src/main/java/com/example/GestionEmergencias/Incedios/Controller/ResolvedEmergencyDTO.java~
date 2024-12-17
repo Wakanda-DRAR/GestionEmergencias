@@ -1,0 +1,4 @@
+package com.example.GestionEmergencias.Incedios.Controller;
+
+public class ResolvedEmergencyDTO {
+}
