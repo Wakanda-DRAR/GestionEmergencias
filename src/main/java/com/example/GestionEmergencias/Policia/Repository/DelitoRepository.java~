@@ -1,0 +1,4 @@
+package com.example.GestionEmergencias.Policia.Repository;
+
+public interface DelitoRepository {
+}

@@ -3,60 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emergency Management</title>
+  <title>Gestión de Emergencias</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="superhero.ico" type="image/x-icon">
 </head>
 <body>
 <div class="menu">
-  <button onclick="showReports()">View Reports</button>
+  <button onclick="location.href='incendios.html'">Incendios</button>
+  <button onclick="location.href='policia.html'">Policía</button>
+  <button onclick="location.href='#'">Ambulancia</button>
+  <button onclick="location.href='#'">Rescate</button>
 </div>
-<div id="reports" class="hidden">
-  <h2>Incendios</h2>
-  <table id="incendiosTable">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Ciudad</th>
-      <th>Pais</th>
-      <th>Fecha</th>
-      <th>Hora</th>
-      <th>Calle</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <h2>Bomberos</h2>
-  <table id="bomberosTable">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Departamento-Bomberos</th>
-      <th>Nombre</th>
-      <th>Número de identificación</th>
-      <th>Año</th>
-      <th>Años de servicio</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <h2>Emergencias Resueltas</h2>
-  <table id="resolvedTable">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>ID del Incendio</th>
-      <th>Ciudad</th>
-      <th>Pais</th>
-      <th>Calle</th>
-      <th>Fecha de Resolución</th>
-      <th>ID del bombero</th>
-      <th>Nombre del bombero</th>
-      <th>Departamento-Bomberos</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-<script src="scripts.js"></script>
 </body>
 </html>
