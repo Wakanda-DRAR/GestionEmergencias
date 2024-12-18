@@ -34,7 +34,7 @@ public class EmergenciaPoliciaController {
     @Autowired
     private EmergenciaResueltaPoliciaRepository emergenciaResueltaPoliciaRepository;
 
-   @Autowired
+    @Autowired
     private CarcelRepository carcelRepository;
 
     @Autowired

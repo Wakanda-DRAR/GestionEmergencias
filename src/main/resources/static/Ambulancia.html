@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Ambulancia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="superhero.ico" type="image/x-icon">
+</head>
+<body>
+<div class="menu">
+    <button onclick="location.href='index.html'">Volver al Menú</button>
+    <button onclick="refreshPage()">Refrescar Reporte</button>
+</div>
+<div id="reports">
+    <h2>Ambulancias</h2>
+    <table id="ambulanciasTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Identificador Ambulancia</th>
+            <th>Nombre del Conductor</th>
+            <th>Hospital</th>
+            <th>Años</th>
+            <th>Años de Servicio</th>
+            <th>Ciudad</th>
+            <th>Pais</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2>Accidentados</h2>
+    <table id="accidentadosTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Años</th>
+            <th>Tipo de Accidente</th>
+            <th>Ciudad</th>
+            <th>Pais</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2>Emergencias Resueltas</h2>
+    <table id="resolvedAmbulanciaTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha de Resolución</th>
+            <th>Nombre del Conductor</th>
+            <th>Nombre del Accidentado</th>
+            <th>Ciudad</th>
+            <th>Pais</th>
+            <th>Tipo de Accidente</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <h2>Hospitales</h2>
+    <table id="hospitalesTable">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre del Hospital</th>
+            <th>Nombre del Ingresado</th>
+            <th>Ciudad</th>
+            <th>Pais</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script src="scripts.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', fetchAmbulanciaReports);
+</script>
+</body>
+</html>

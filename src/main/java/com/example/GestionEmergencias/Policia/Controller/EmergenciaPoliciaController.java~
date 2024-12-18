@@ -1,8 +1,10 @@
 package com.example.GestionEmergencias.Policia.Controller;
 
+import com.example.GestionEmergencias.Policia.Entity.Carcel;
 import com.example.GestionEmergencias.Policia.Entity.Delito;
 import com.example.GestionEmergencias.Policia.Entity.Policia;
 import com.example.GestionEmergencias.Policia.Entity.EmergenciaResueltaPolicia;
+import com.example.GestionEmergencias.Policia.Repository.CarcelRepository;
 import com.example.GestionEmergencias.Policia.Service.DelitoService;
 import com.example.GestionEmergencias.Policia.Service.PoliciaService;
 import com.example.GestionEmergencias.Policia.Service.DelitoResolucionService;
@@ -31,6 +33,9 @@ public class EmergenciaPoliciaController {
 
     @Autowired
     private EmergenciaResueltaPoliciaRepository emergenciaResueltaPoliciaRepository;
+
+   @Autowired
+    private CarcelRepository carcelRepository;
 
     @Autowired
     private DelitoService delitoService;
@@ -72,6 +77,9 @@ public class EmergenciaPoliciaController {
         return emergenciaResueltaPoliciaRepository.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/carcel")
+    public List<Carcel> getCarcel() {
+        return carcelRepository.findAll();
+    }
 
 }

@@ -35,6 +35,24 @@ function fetchPoliciaReports() {
         .then(data => populateTable('carcelTable', data));
 }
 
+function fetchAmbulanciaReports() {
+    fetch('/api/ambulancias')
+        .then(response => response.json())
+        .then(data => populateTable('ambulanciasTable', data));
+
+    fetch('/api/accidentados')
+        .then(response => response.json())
+        .then(data => populateTable('accidentadosTable', data));
+
+    fetch('/api/resolvedAmbulancia')
+        .then(response => response.json())
+        .then(data => populateTable('resolvedAmbulanciaTable', data));
+
+    fetch('/api/hospitales')
+        .then(response => response.json())
+        .then(data => populateTable('hospitalesTable', data));
+}
+
 function populateTable(tableId, data) {
     const tableBody = document.getElementById(tableId).getElementsByTagName('tbody')[0];
     tableBody.innerHTML = '';
