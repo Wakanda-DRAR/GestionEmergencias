@@ -48,7 +48,7 @@ Despliegue de bomberos al lugar del incendio.
 Registro de las acciones tomadas durante la emergencia.
 Resolución y reporte de incidentes.
 
-#### 4. Módulo de Policía
+#### 3. Módulo de Policía
 
 Objetivo: Manejar emergencias relacionadas con la seguridad pública.
 Entidades principales:
