@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reportes de Policía</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="menu">
+  <button onclick="location.href='index.html'">Volver al Menú</button>
+  <button onclick="refreshPage()">Refrescar Reporte</button>
+</div>
+<div id="reports">
+  <h2>Delitos</h2>
+  <table id="delitosTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre Delincuente</th>
+      <th>Tipo Delito</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Ciudad</th>
+      <th>Pais</th>
+      <th>Calle</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <h2>Policías</h2>
+  <table id="policiasTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Años de Servicio</th>
+      <th>Placa</th>
+      <th>Edad</th>
+      <th>Ciudad</th>
+      <th>Departamento</th>
+      <th>Pais</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <h2>Emergencias Resueltas</h2>
+  <table id="resolvedPoliciaTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID del Delito</th>
+      <th>Ciudad</th>
+      <th>Pais</th>
+      <th>Calle</th>
+      <th>Fecha de Resolución</th>
+      <th>ID del Policía</th>
+      <th>Nombre del Policía</th>
+      <th>Departamento</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <h2>Carcel</h2>
+  <table id="carcelTable">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre Delincuente</th>
+      <th>Años de Cárcel</th>
+      <th>Nombre Cárcel</th>
+      <th>Pais</th>
+      <th>Ciudad</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<script src="scripts.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', fetchPoliciaReports);
+</script>
+</body>
+</html>
