@@ -36,7 +36,7 @@ Asignación automática de ambulancias a emergencias.
 Derivación de pacientes a hospitales.
 Registro y seguimiento de emergencias médicas.
 
-##### 2. Módulo de Incendios
+#### 2. Módulo de Incendios
 
 Objetivo: Coordinar la respuesta ante incendios reportados.
 Entidades principales:
@@ -48,7 +48,7 @@ Despliegue de bomberos al lugar del incendio.
 Registro de las acciones tomadas durante la emergencia.
 Resolución y reporte de incidentes.
 
-##### 4. Módulo de Policía
+#### 4. Módulo de Policía
 
 Objetivo: Manejar emergencias relacionadas con la seguridad pública.
 Entidades principales:
