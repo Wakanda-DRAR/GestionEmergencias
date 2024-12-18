@@ -19,6 +19,7 @@ public class PoliciaService {
     private PoliciaRepository policiaRepository;
 
     private final List<String> nombres = List.of("T'Challa", "Shuri", "Nakia", "Okoye", "M'Baku", "Zuri", "Ramonda", "N'Jobu", "W'Kabi", "Ayo");
+    private final List<String> apellidos = List.of("Udaku", "Kazi", "N'Gabo", "N'Yami", "N'Jadaka", "N'Kano", "N'Dare", "N'Gassi", "N'Baku", "N'Jobu");
     private final Random random = new Random();
 
     public Flux<Policia> asignarPolicias(Flux<Delito> delitos) {
@@ -31,13 +32,19 @@ public class PoliciaService {
 
     private Policia crearPolicia(Delito delito) {
         Policia policia = new Policia();
-        policia.setNombre(nombres.get(random.nextInt(nombres.size())));
+        policia.setNombre(generarNombreAleatorio());
         policia.setAniosServicio(1 + random.nextInt(30));
         policia.setPlaca("P" + (1000 + random.nextInt(9000)));
         policia.setEdad(25 + random.nextInt(20));
         policia.setCiudad(delito.getCiudad());
-        policia.setDepartamento("Departamento de Policía");
+        policia.setDepartamento("Policía " + delito.getCiudad());
         policia.setPais(delito.getPais());
         return policia;
+    }
+
+    private String generarNombreAleatorio() {
+        String nombre = nombres.get(random.nextInt(nombres.size()));
+        String apellido = apellidos.get(random.nextInt(apellidos.size()));
+        return nombre + " " + apellido;
     }
 }

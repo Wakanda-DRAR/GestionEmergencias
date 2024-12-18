@@ -49,7 +49,7 @@ public class DelitoResolucionService {
                     Carcel carcel = new Carcel();
                     carcel.setNombreDelincuente(delito.getNombreDelincuente());
                     carcel.setAniosCarcel(5 + new Random().nextInt(20));
-                    carcel.setNombreCarcel("Carcel Central de Wakanda");
+                    carcel.setNombreCarcel("Carcel de " + delito.getCiudad());
                     carcel.setPais(delito.getPais());
                     carcel.setCiudad(delito.getCiudad());
                     carcelRepository.save(carcel);
